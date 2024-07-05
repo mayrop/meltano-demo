@@ -1,0 +1,28 @@
+version: 1
+default_environment: dev
+project_id: 2c6bdfc1-6d42-458e-9eb3-74397c44578e
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+  - name: tap-github
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-github.git
+    config:
+      repositories: 
+        - meltano/sdk
+      start_date: '2024-06-01'
+    select:
+      - 'commits.*'              
+      - 'issues.*'
+      - 'labels.*'
+      - 'pull_requests.*'
+  loaders:
+  - name: target-csv
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/target-csv.git
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
